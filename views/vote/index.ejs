@@ -22,7 +22,7 @@
 			<tr data-id="<%= votes.id %>" data-model="item">
 				<td><%= index+1 %></td>
 				<td><%= vote.id %></td>
-				<td><span style="max-width: 150px;"><%= vote.title %></span></td>
+				<td><p class="vote-index-title"><%= vote.title %></p></td>
 				<td><a href="/vote/show/<%= vote.id %>" class="btn btn-sm btn-primary">查看</a></td>
 				<td><a href="/vote/edit/<%= vote.id %>" class="btn btn-sm btn-warning">编辑</a></td>
 				<!-- <td><a href="/vote" class="btn btn-sm btn-danger">删除</a></td> -->
