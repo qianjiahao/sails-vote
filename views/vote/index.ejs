@@ -1,0 +1,36 @@
+<div class="container vote-index">
+
+
+
+	<% if(!flash.success && flash.failure){ %>
+		<div class="alert alert-danger">
+			<button class="close" type="button" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<span><%= flash.failure %></span>
+		</div>
+	<%	} %>
+	<h2>题目列表</h2>
+
+	<table class="table table-hover">
+		<tr>
+			<td></td>
+			<td>ID</td>
+			<td>Title</td>
+			<td></td>
+			<td></td>
+			<td></td>	
+		</tr>
+		<% _.each(votes,function (vote, index) {  %>
+			<tr data-id="<%= votes.id %>" data-model="item">
+				<td><%= index+1 %></td>
+				<td><%= vote.id %></td>
+				<td><%= vote.title %></td>
+				<td><a href="/vote/show/<%= vote.id %>" class="btn btn-sm btn-primary">查看</a></td>
+				<td><a href="/vote/edit/<%= vote.id %>" class="btn btn-sm btn-warning">编辑</a></td>
+				<td><a href="/vote" class="btn btn-sm btn-danger">删除</a></td>
+			</tr>
+		<%	})%>
+	</table>
+</div>
+

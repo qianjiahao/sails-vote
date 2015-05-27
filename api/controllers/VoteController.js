@@ -18,26 +18,42 @@ module.exports = {
 			content: req.param('item')
 		}
 
-		// console.log(vote);
-
 		Vote.create( vote, function (err, vote) {
 			if(err) {
 				req.session.flash = {
-
 					failure: '添加失败',
 					success:''
 				};
-
 				return res.redirect('/vote/new');
 			}
-
-			console.log(vote);
-
 			req.session.flash = {
 				failure:'',
 				success:'添加成功'
 			};
 			return res.redirect('/vote/new');
+		});
+	},
+
+	index: function (req, res, next) {
+
+		Vote.find(function (err, votes) {
+			if(err) {
+				return next(err);
+			}
+			res.view({
+				votes: votes
+			});
+		});
+	},
+
+	show: function (req, res, next) {
+
+		Vote.findOne( req.param('id'), function (err, vote) {
+			if(err) return next(err);
+
+			res.view({
+				vote: vote
+			});
 		});
 	}
 };
