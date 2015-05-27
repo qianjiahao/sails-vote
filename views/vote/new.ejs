@@ -1,5 +1,24 @@
 <div class="container vote-new">
-	<form class="form-horizontal">
+
+	<% if(flash.success && !flash.failure) {%>
+		<div class="alert alert-success alert-dismissible">
+			<button class="close" type="button" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<span><%= flash.success %></span>
+		</div>
+	<% }else if(!flash.success && flash.failure){ %>
+		<div class="alert alert-danger">
+			<button class="close" type="button" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<span><%= flash.failure %></span>
+		</div>
+	<%	} %>
+
+
+
+	<form class="form-horizontal" method="POST" action="/vote/create">
 		<div class="form-group">
 			<lable class="col-sm-2" for="textarea">题目描述</lable>
 			<div class="col-sm-10">
@@ -13,13 +32,13 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-2" for="item-0">选项 B</label>
+			<label class="col-sm-2" for="item-1">选项 B</label>
 			<div class="col-sm-10">
 				<input type="text" name="item" class="form-control" id="item-1" autocomplete="off" placeholder="选项">
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-2" for="item-0">选项 C</label>
+			<label class="col-sm-2" for="item-2">选项 C</label>
 			<div class="col-sm-10">
 				<input type="text" name="item" class="form-control" id="item-2" autocomplete="off" placeholder="选项">
 			</div>
