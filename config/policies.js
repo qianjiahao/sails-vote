@@ -29,8 +29,7 @@ module.exports.policies = {
   '*': 'flash',
 
   vote: {
-    'new':'flash',
-    create:'flash'
+    '*': 'flash'
   }
   /***************************************************************************
   *                                                                          *

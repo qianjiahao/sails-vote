@@ -1,0 +1,48 @@
+<div class="container vote-edit">
+
+	<% if(flash.success && !flash.failure) {%>
+		<div class="alert alert-success alert-dismissible">
+			<button class="close" type="button" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<span><%= flash.success %></span>
+		</div>
+	<% }else if(!flash.success && flash.failure){ %>
+		<div class="alert alert-danger">
+			<button class="close" type="button" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<span><%= flash.failure %></span>
+		</div>
+	<%	} %>
+
+	<form class="form-horizontal" method="POST" action="/vote/update/<%= vote.id %>">
+
+		<div class="form-group">
+			<lable class="col-sm-2" for="textarea">题目描述</lable>
+			<div class="col-sm-10">
+				<textarea name="title" class="form-control" id="textarea" placeholder="题目描述" rows="4" autocomplete="off" ><%= vote.title %></textarea>	
+			</div>
+		</div>
+		<% _.each(vote.content, function (item, index) {  %>
+			<div class="form-group">
+				<label class="col-sm-2" for="item-<%= index+1%>">选项 <%= index+1%></label>
+				<div class="col-sm-10">
+					<input type="text" name="item" class="form-control" id="item-<%= index %>" autocomplete="off" placeholder="选项" value="<%= item %>">
+				</div>
+			</div>			
+
+		<%	})%>
+
+		<input type="hidden" name="_csrf" value="<%= _csrf %>">
+		
+		<div class="form-group">
+			<div class="col-sm-6">
+				<input type="submit" class="btn btn-mid btn-success btn-block" value="更新">			
+			</div>
+			<div class="col-sm-6">
+				<input type="reset" class="btn btn-mid btn-warning btn-block" value="重置">			
+			</div>
+		</div>
+	</form>	
+</div>
