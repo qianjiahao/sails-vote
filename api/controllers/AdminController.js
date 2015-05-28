@@ -20,7 +20,7 @@ module.exports = {
 		var confirmation = req.param('confirmation');
 		var email = req.param('email');
 		var organization = req.param('organization');
-		var status = 'user';
+		var online = true;
 		
 		if (!(name && email)) {
 			req.session.flash = {
@@ -57,11 +57,12 @@ module.exports = {
 						name: name,
 						encryptedPassword: encryptedPassword,
 						email: email,
-						status: status,
-						organization: organization
+						organization: organization,
+						online:online
 					};
 					Admin.create(user, function (err, user) {
 						if (err) return next(err);
+
 						req.session.authenticated = true;
 						req.session.User = user;
 						res.redirect('/admin/show/' + user.id);
@@ -198,16 +199,34 @@ module.exports = {
 					};
 					return res.redirect('back');
 				}
+
 				req.session.authenticated = true;
 				req.session.User = user;
-				res.redirect('/admin/show/' + user.id);
+				user.online = true;
+
+				user.save(function (err, user) {
+					if(err) return next(err);
+
+					if(user.status === 'admin') {
+						return res.redirect('/admin/index');
+					}
+					
+					res.redirect('/admin/show/' + user.id);
+
+				});
 			});
 		});
 	},
 
 	logout: function(req, res, next) {
 
-		req.session.destroy();
-		res.redirect('/');
+		Admin.update(req.session.User.id, {
+			online:false
+		},function (err) {
+			if(err) return next(err);
+
+			req.session.destroy();
+			res.redirect('/');	
+		});
 	}
 };

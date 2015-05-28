@@ -28,6 +28,11 @@ module.exports = {
   		defaultsTo: 'user'
   	},
 
+    online: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
   	encryptedPassword: {
   		type: 'string'
   	}

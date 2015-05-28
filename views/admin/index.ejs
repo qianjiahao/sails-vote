@@ -15,7 +15,13 @@
 		</tr>
 		<% _.each(users,function (user, index) {  %>
 			<tr data-id="<%= user.id %>" data-model="user">
-				<td><%= index+1 %></td>
+				<td>
+					<% if(user.online) { %>
+						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					<% }else{ %>
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					<% } %>
+				</td>
 				<td><%= user.name %></td>
 				<td><%= user.email %></td>
 				<td><%= user.organization %></td>
