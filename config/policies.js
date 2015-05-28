@@ -26,10 +26,32 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
+  /**
+   * rest api * : all the api must pass the flash policy .
+   */
   '*': 'flash',
 
+
+  /**
+   * rest api item : only allow the admin to manage .
+   * @type {Object}
+   */
   item: {
-    '*': 'flash'
+    '*':['flash','sessionAuth','admin']
+  },
+
+  /**
+   * rest api admin : index only allow the admin to manage ,
+   *  the logout , show , update , destroy can be manage only if user has been authenticated .
+   * @type {Object}
+   */
+  admin: {
+    '*':'flash',
+    logout:['flash','sessionAuth'],
+    show:['flash','sessionAuth'],
+    update:['flash','sessionAuth'],
+    destroy:['flash','sessionAuth'],
+    index:['flash','sessionAuth','admin']
   }
   /***************************************************************************
   *                                                                          *

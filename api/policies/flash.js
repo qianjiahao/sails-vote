@@ -1,3 +1,7 @@
+/**
+ * passing the policy by everyone .
+ */
+
 module.exports = function (req, res, next) {
 
 	res.locals.flash = {};

@@ -1,12 +1,6 @@
 <div class="container admin-index">
-	<% if(!flash.success && flash.failure){ %>
-		<div class="alert alert-danger">
-			<button class="close" type="button" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<span><%= flash.failure %></span>
-		</div>
-	<%	} %>
+	<%- include ../flash%>
+	
 	<h2>Users List</h2>
 
 	<table class="table table-hover">

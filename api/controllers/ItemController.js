@@ -7,7 +7,8 @@
 
 module.exports = {
 
-	'new': function (req, res, next) {
+	new: function (req, res, next) {
+
 		res.view();
 	},
 
@@ -17,38 +18,30 @@ module.exports = {
 			title: req.param('title'),
 			content: req.param('option')
 		}
-
 		Item.create( item, function (err, item) {
-			if(err) {
+			if(err) return next(err);
+
+			if(!item) {
 				req.session.flash = {
-					failure: '添加失败',
-					success:''
+					failure: 'create failure'
 				};
 				return res.redirect('/item/new');
 			}
 			req.session.flash = {
-				failure:'',
-				success:'添加成功'
+				success:'create success'
 			};
-			return res.redirect('/item/new');
+			res.redirect('/item/new');
 		});
 	},
 
 	index: function (req, res, next) {
 
 		Item.find(function (err, items) {
-			if(err) {
-
-				req.session.flash = {
-					failure:'显示失败',
-					success:''
-				};
-				return res.redirect('/item/index');
-			}
+			if(err) return next(err);
+			
 			if(!items) {
 				req.session.flash = {
-					failure:'暂无此投票',
-					success:''
+					failure:'item don\' exist'
 				};
 				return res.redirect('/item/index');	
 			}
@@ -61,22 +54,14 @@ module.exports = {
 	show: function (req, res, next) {
 
 		Item.findOne( req.param('id'), function (err, item) {
-			if(err) {
+			if(err) return next(err);
 
-				req.session.flash = {
-					failure:'显示失败',
-					success:''
-				};
-				return res.redirect('/item/index');
-			}
 			if(!item) {
 				req.session.flash = {
-					failure:'暂无此投票',
-					success:''
+					failure:'item don\' exist'
 				};
 				return res.redirect('/item/index');	
 			}
-
 			res.view({
 				item: item
 			});
@@ -86,21 +71,14 @@ module.exports = {
 	edit: function (req, res, next) {
 
 		Item.findOne( req.param('id'), function (err, item) {
-			if(err) {
-				req.session.flash = {
-					failure:'编辑失败',
-					success:''
-				};
-				return res.redirect('/item/index');
-			}
+			if(err) return next(err);
+
 			if(!item) {
 				req.session.flash = {
-					failure:'暂无此投票',
-					success:''
+					failure:'item don\' exist'
 				};
 				return res.redirect('/item/index');	
 			}
-
 			res.view({
 				item: item
 			});
@@ -112,43 +90,37 @@ module.exports = {
 		var item = {
 			title: req.param('title'),
 			content: req.param('option')
-		}
+		};
+		Item.findOne(req.param('id'), function (err, item) {
+			if(err) return next(err);
 
-		Item.update( req.param('id'), item, function (err) {
-			if(err) {
+			if(!item) {
 				req.session.flash = {
-					failure:'更新失败',
-					success:''
+					failure:'item don\' exist'
 				};
-				return res.redirect('/item/edit/' + req.param('id'));
+				return res.redirect('/item/edit');
 			}
-			req.session.flash = {
-				failure:'',
-				success:'更新成功'
-			};
-			
-			res.redirect('/item/show/' + req.param('id'));
+			Item.update( req.param('id'), item, function (err) {
+				if(err) return next(err);
 
+				req.session.flash = {
+					success:'update item success'
+				};
+				res.redirect('/item/show/' + req.param('id'));
+			});
 		});
 	},
 
 	destroy: function (req, res, next) {
 
 		Item.destroy(req.param('id'), function (err) {
-			if(err) {
-				req.session.flash = {
-					failure:'删除失败',
-					success:''
-				};
-				return res.redirect('/item/index');
-			}
+			if(err) return next(err);
 
 			req.session.flash = {
-				failure:'',
-				success:'删除成功'
+				success:'destroy success'
 			};
-			return res.redirect('/item/index');
-		})
+			res.redirect('/item/index');
+		});
 	}
 };
 

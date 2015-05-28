@@ -1,21 +1,8 @@
 <div class="container item-edit">
 
+	<%- include ../flash%>
 	<h2>Edit Item</h2>
-	<% if(flash.success && !flash.failure) {%>
-		<div class="alert alert-success alert-dismissible">
-			<button class="close" type="button" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<span><%= flash.success %></span>
-		</div>
-	<% }else if(!flash.success && flash.failure){ %>
-		<div class="alert alert-danger">
-			<button class="close" type="button" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<span><%= flash.failure %></span>
-		</div>
-	<%	} %>
+
 
 	<form class="form-horizontal" method="POST" action="/item/update/<%= item.id %>">
 

@@ -1,0 +1,14 @@
+<form action="/admin/update/<%= user.id %>" method="POST" class="form-signin admin-new">
+	
+	<%- include ../flash%>
+
+	<h2>Edit an account</h2>
+	<input type="text" class="form-control" id="name" placeholder="Name" name="name" value="<%= user.name %>">
+
+	<input type="email" class="form-control" placeholder="Email" name="email" value="<%= user.email %>">
+
+	<input type="text" class="form-control" placeholder="Organization" name="organization" value="<%= user.organization %>">
+
+	<input type="submit" class="btn btn-lg btn-primary btn-block" value="Edit Account">
+	<input type="hidden" name="_csrf" value="<%= _csrf %>">
+</form>

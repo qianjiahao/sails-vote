@@ -1,15 +1,8 @@
 <form action="/admin/create" method="POST" id="sign-up-form" class="form-signin admin-new">
 	
-	<h2>Create an account</h2>
+	<%- include ../flash%>
 
-	<% if(!flash.success && flash.failure){ %>
-		<div class="alert alert-danger">
-			<button class="close" type="button" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<span><%= flash.failure %></span>
-		</div>
-	<%	} %>
+	<h2>Create an account</h2>
 	<input type="text" class="form-control" id="name" placeholder="Name" name="name">
 
 	<input type="email" class="form-control" placeholder="Email" name="email">

@@ -1,25 +1,8 @@
 <div class="container item-new">
 
+	<%- include ../flash%>
+
 	<h2>New Item</h2>
-	
-	<% if(flash.success && !flash.failure) {%>
-		<div class="alert alert-success alert-dismissible">
-			<button class="close" type="button" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<span><%= flash.success %></span>
-		</div>
-	<% }else if(!flash.success && flash.failure){ %>
-		<div class="alert alert-danger">
-			<button class="close" type="button" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<span><%= flash.failure %></span>
-		</div>
-	<%	} %>
-
-
-
 	<form class="form-horizontal" method="POST" action="/item/create">
 		<div class="form-group">
 			<lable class="col-sm-2" for="textarea">题目描述</lable>
