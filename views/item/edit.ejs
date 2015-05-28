@@ -1,4 +1,4 @@
-<div class="container vote-edit">
+<div class="container item-edit">
 
 	<% if(flash.success && !flash.failure) {%>
 		<div class="alert alert-success alert-dismissible">
@@ -16,19 +16,19 @@
 		</div>
 	<%	} %>
 
-	<form class="form-horizontal" method="POST" action="/vote/update/<%= vote.id %>">
+	<form class="form-horizontal" method="POST" action="/item/update/<%= item.id %>">
 
 		<div class="form-group">
 			<lable class="col-sm-2" for="textarea">题目描述</lable>
 			<div class="col-sm-10">
-				<textarea name="title" class="form-control" id="textarea" placeholder="题目描述" rows="4" autocomplete="off" ><%= vote.title %></textarea>	
+				<textarea name="title" class="form-control" id="textarea" placeholder="题目描述" rows="4" autocomplete="off" ><%= item.title %></textarea>	
 			</div>
 		</div>
-		<% _.each(vote.content, function (item, index) {  %>
+		<% _.each(item.content, function (option, index) {  %>
 			<div class="form-group">
-				<label class="col-sm-2" for="item-<%= index+1%>">选项 <%= index+1%></label>
+				<label class="col-sm-2" for="option-<%= index+1%>">选项 <%= index+1%></label>
 				<div class="col-sm-10">
-					<input type="text" name="item" class="form-control" id="item-<%= index %>" autocomplete="off" placeholder="选项" value="<%= item %>">
+					<input type="text" name="option" class="form-control" id="option-<%= index %>" autocomplete="off" placeholder="选项" value="<%= option %>">
 				</div>
 			</div>			
 

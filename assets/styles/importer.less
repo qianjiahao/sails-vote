@@ -18,31 +18,69 @@ body{
 	background-image: url(../images/default-bg.png);
 }
 
-.vote-new, .vote-edit{
+.item-new, .item-edit{
 	margin-top:80px;
 	max-width: 600px;
 }
 
-.vote-index{
+.item-index{
 	margin-top: 80px;
 	max-width: 1024px;
 }
 
-.vote-index-title{
-	/*width: 300px;*/
+.item-index-title{
 	max-width: 300px;
 	white-space: normal;
 	overflow:hidden;
 	text-overflow:ellipsis;
 }
-.vote-show{
+.item-show{
 	margin-top: 80px;
 	max-width: 600px;
 	line-height: 18px;
 	font-size: 18px;
 }
 
-.vote-show-title{
+.item-show-title{
 	font-size: 30px;
 	text-indent: 40px;
+}
+
+.a-button:focus, .a-button:hover, .a-button:active, .a-button:visited{
+	outline: none;
+	text-decoration: none;
+}
+
+.login-button-right{
+	margin-right: 10px;
+}
+
+.form-signin{
+	width: 30%;
+	max-width: 30%;
+	padding: 19px 29px 29px;
+	margin: 20px auto 20px;
+	background-color: @LightGray;
+	-webkit-border-radius:15px;
+	-moz-border-radius:15px;
+	border-radius: 15px;
+
+	h2{
+		text-align: center;
+		margin-top: 0px;
+	}
+
+}
+
+.form-signin input[type="text"],
+.form-signin input[type="password"],
+.form-signin input[type="email"]{
+	font-size: 16px;
+	height: auto;
+	margin-bottom: 10px;
+	padding: 7px 9px;
+}
+
+.admin-new{
+	margin-top: 80px;
 }

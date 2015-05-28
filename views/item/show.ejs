@@ -1,7 +1,7 @@
-<div class="container vote-show">
+<div class="container item-show">
 	<h1>题目描述</h1>
 
-	<p class="vote-show-title"><%= vote.title %></p>
+	<p class="item-show-title"><%= item.title %></p>
 	
 	<table class="table table-hover">
 		<tr>
@@ -9,10 +9,10 @@
 			<td>内容</td>
 		</tr>
 
-		<% _.each(vote.content, function (item, index) {	%>
+		<% _.each(item.content, function (option, index) {	%>
 			<tr>
 				<td><%= index+1 %></td>
-				<td><%= item %></td>
+				<td><%= option %></td>
 			</tr>
 		<%	})%>	
 	</table>

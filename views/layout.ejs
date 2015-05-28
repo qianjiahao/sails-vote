@@ -50,15 +50,19 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">front-end</a></li>
             <li><a href="#">back-end</a></li>
-            <li><a href="/vote/new">new</a></li>
-            <li><a href="/vote/index">index</a></li>
+            <li><a href="/item/new">new</a></li>
+            <li><a href="/item/index">index</a></li>
           </ul>
+          <div class="navbar-right">
+              <a href="/admin/new" class="btn-default btn-sm navbar-btn navbar-right a-button">signin</a>
+              <a href="/admin/login" class="btn-success btn-sm navbar-btn navbar-right a-button" style="margin-right: 10px;">login</a>
+          </div>
         </div>
       </div>
     </div>
     <%- body %>
 
-
+    
 
     <!--
         Client-side Templates
@@ -112,7 +116,9 @@
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
     <script src="/js/dependencies/jquery.min.js"></script>
+    <script src="/js/dependencies/jquery.validate.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/customerValidate.js"></script>
     <!--SCRIPTS END-->
   </body>
 </html>

@@ -1,153 +1,153 @@
 /**
- * VoteController
+ * ItemController
  *
- * @description :: Server-side logic for managing votes
+ * @description :: Server-side logic for managing items
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
 module.exports = {
-	
+
 	'new': function (req, res, next) {
 		res.view();
 	},
 
 	create: function (req, res, next) {
 
-		var vote = {
+		var item = {
 			title: req.param('title'),
-			content: req.param('item')
+			content: req.param('option')
 		}
 
-		Vote.create( vote, function (err, vote) {
+		Item.create( item, function (err, item) {
 			if(err) {
 				req.session.flash = {
 					failure: '添加失败',
 					success:''
 				};
-				return res.redirect('/vote/new');
+				return res.redirect('/item/new');
 			}
 			req.session.flash = {
 				failure:'',
 				success:'添加成功'
 			};
-			return res.redirect('/vote/new');
+			return res.redirect('/item/new');
 		});
 	},
 
 	index: function (req, res, next) {
 
-		Vote.find(function (err, votes) {
+		Item.find(function (err, items) {
 			if(err) {
 
 				req.session.flash = {
 					failure:'显示失败',
 					success:''
 				};
-				return res.redirect('/vote/index');
+				return res.redirect('/item/index');
 			}
-			if(!votes) {
+			if(!items) {
 				req.session.flash = {
 					failure:'暂无此投票',
 					success:''
 				};
-				return res.redirect('/vote/index');	
+				return res.redirect('/item/index');	
 			}
 			res.view({
-				votes: votes
+				items: items
 			});
 		});
 	},
 
 	show: function (req, res, next) {
 
-		Vote.findOne( req.param('id'), function (err, vote) {
+		Item.findOne( req.param('id'), function (err, item) {
 			if(err) {
 
 				req.session.flash = {
 					failure:'显示失败',
 					success:''
 				};
-				return res.redirect('/vote/index');
+				return res.redirect('/item/index');
 			}
-			if(!vote) {
+			if(!item) {
 				req.session.flash = {
 					failure:'暂无此投票',
 					success:''
 				};
-				return res.redirect('/vote/index');	
+				return res.redirect('/item/index');	
 			}
 
 			res.view({
-				vote: vote
+				item: item
 			});
 		});
 	},
 
 	edit: function (req, res, next) {
 
-		Vote.findOne( req.param('id'), function (err, vote) {
+		Item.findOne( req.param('id'), function (err, item) {
 			if(err) {
 				req.session.flash = {
 					failure:'编辑失败',
 					success:''
 				};
-				return res.redirect('/vote/index');
+				return res.redirect('/item/index');
 			}
-			if(!vote) {
+			if(!item) {
 				req.session.flash = {
 					failure:'暂无此投票',
 					success:''
 				};
-				return res.redirect('/vote/index');	
+				return res.redirect('/item/index');	
 			}
 
 			res.view({
-				vote: vote
+				item: item
 			});
 		});
 	},
 
 	update: function (req, res, next) {
 
-		var vote = {
+		var item = {
 			title: req.param('title'),
-			content: req.param('item')
+			content: req.param('option')
 		}
 
-		Vote.update( req.param('id'), vote, function (err) {
+		Item.update( req.param('id'), item, function (err) {
 			if(err) {
 				req.session.flash = {
 					failure:'更新失败',
 					success:''
 				};
-				return res.redirect('/vote/edit/' + req.param('id'));
+				return res.redirect('/item/edit/' + req.param('id'));
 			}
 			req.session.flash = {
 				failure:'',
 				success:'更新成功'
 			};
 			
-			res.redirect('/vote/show/' + req.param('id'));
+			res.redirect('/item/show/' + req.param('id'));
 
 		});
 	},
 
 	destroy: function (req, res, next) {
 
-		Vote.destroy(req.param('id'), function (err) {
+		Item.destroy(req.param('id'), function (err) {
 			if(err) {
 				req.session.flash = {
 					failure:'删除失败',
 					success:''
 				};
-				return res.redirect('/vote/index');
+				return res.redirect('/item/index');
 			}
 
 			req.session.flash = {
 				failure:'',
 				success:'删除成功'
 			};
-			return res.redirect('/vote/index');
+			return res.redirect('/item/index');
 		})
 	}
 };

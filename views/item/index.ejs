@@ -1,4 +1,4 @@
-<div class="container vote-index">
+<div class="container item-index">
 	<% if(!flash.success && flash.failure){ %>
 		<div class="alert alert-danger">
 			<button class="close" type="button" data-dismiss="alert" aria-label="Close">
@@ -18,15 +18,14 @@
 			<td></td>
 			<td></td>	
 		</tr>
-		<% _.each(votes,function (vote, index) {  %>
-			<tr data-id="<%= votes.id %>" data-model="item">
+		<% _.each(items,function (item, index) {  %>
+			<tr data-id="<%= item.id %>" data-model="item">
 				<td><%= index+1 %></td>
-				<td><%= vote.id %></td>
-				<td><p class="vote-index-title"><%= vote.title %></p></td>
-				<td><a href="/vote/show/<%= vote.id %>" class="btn btn-sm btn-primary">查看</a></td>
-				<td><a href="/vote/edit/<%= vote.id %>" class="btn btn-sm btn-warning">编辑</a></td>
-				<!-- <td><a href="/vote" class="btn btn-sm btn-danger">删除</a></td> -->
-				<td><form method="POST" action="/vote/destroy/<%= vote.id %>">
+				<td><%= item.id %></td>
+				<td><p class="item-index-title"><%= item.title %></p></td>
+				<td><a href="/item/show/<%= item.id %>" class="btn btn-sm btn-primary">查看</a></td>
+				<td><a href="/item/edit/<%= item.id %>" class="btn btn-sm btn-warning">编辑</a></td>
+				<td><form method="POST" action="/item/destroy/<%= item.id %>">
 					<input type="submit" class="btn btn-sm btn-danger" value="删除">
 					<input type="hidden" name="_csrf" value="<%= _csrf %>">
 				</form></td>
