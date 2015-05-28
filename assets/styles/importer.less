@@ -18,13 +18,18 @@ body{
 	background-image: url(../images/default-bg.png);
 }
 
-.item-new, .item-edit{
-	margin-top:80px;
-	max-width: 600px;
+.item-new, .item-edit, .item-show,.admin-show{
+	margin-top:100px;
+	max-width: 800px;
+	font-size: 20px;
+	line-height: 20px;
+	h2{
+		margin-bottom: 30px;	
+	}
 }
 
-.item-index{
-	margin-top: 80px;
+.item-index, .admin-index{
+	margin-top: 100px;
 	max-width: 1024px;
 }
 
@@ -34,16 +39,17 @@ body{
 	overflow:hidden;
 	text-overflow:ellipsis;
 }
-.item-show{
-	margin-top: 80px;
-	max-width: 600px;
-	line-height: 18px;
-	font-size: 18px;
-}
 
 .item-show-title{
-	font-size: 30px;
-	text-indent: 40px;
+	font-size: 22px;
+	width: 100%;
+	min-height: 80px;
+	padding: 16px 10px;
+	background-color: @White;
+	-webkit-border-radius:15px;
+	-moz-border-radius:15px;
+	border-radius: 15px;
+	border:1px solid @DarkGray;
 }
 
 .a-button:focus, .a-button:hover, .a-button:active, .a-button:visited{
@@ -83,4 +89,11 @@ body{
 
 .admin-new{
 	margin-top: 80px;
+}
+
+
+
+
+.admin-show-first-td{
+	text-align: left;
 }

@@ -1,0 +1,29 @@
+<div class="container admin-show">
+	
+	<h2>User Information</h2>
+
+	<table class="table" style="text-align: right;">
+		<tr>
+			<td class="admin-show-first-td">User name</td>
+			<td><%= user.name %></td>
+		</tr>
+		<tr>
+			<td class="admin-show-first-td">User Email</td>
+			<td><%= user.email %></td>
+		</tr>
+		<tr>
+			<td class="admin-show-first-td">User Organization</td>
+			<td><%= user.organization %></td>
+		</tr>
+		<tr>
+			<td><a href="/admin/edit/<%= user.id %>" class="btn btn-warning btn-block">edit</a></td>
+			<td> 
+				<form action="/admin/destroy/<%= user.id %>">
+					<input type="hidden" name="_csrf" value="<%= _csrf %>">
+					<input type="submit" class="btn btn-danger btn-block" value="destroy">
+				</form>
+			</td>
+		</tr>
+	</table>
+
+</div>

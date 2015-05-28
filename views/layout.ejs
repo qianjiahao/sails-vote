@@ -48,10 +48,14 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">front-end</a></li>
-            <li><a href="#">back-end</a></li>
-            <li><a href="/item/new">new</a></li>
-            <li><a href="/item/index">index</a></li>
+            <%if(session.authenticated){%>
+            <li class="active"><a href="/admin/show/<%= session.User.id%>"><%= session.User.name %></a></li>
+            <% } %>
+            <%if(session.authenticated && session.User.admin == 'admin'){ %>
+            <li><a href="/admin/index">User</a></li>
+            <li><a href="/item/index">Item</a></li>
+            <li><a href="/item/new">New</a></li>
+            <%}%>
           </ul>
           <div class="navbar-right">
             <% if(!session.authenticated){ %>

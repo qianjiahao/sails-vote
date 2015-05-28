@@ -70,11 +70,51 @@ module.exports = {
 						req.session.authenticated = true;
 						req.session.User = user;
 
-						res.redirect('/item/index');
+						res.redirect('/item/show/' + user.id);
 					});
 				}
 			});
 		});
+	},
+
+	index: function (req, res, next) {
+
+		Admin.find(function (err, users) {
+			if(err) return next(err);
+
+			if(!users) {
+				req.session.flash = {
+					failure:'no users exist',
+					success:''
+				};
+				return res.redirect('/admin/new');
+			}
+
+			res.view({
+				users: users
+			});
+		});
+
+	},
+
+	show: function (req, res, next) {
+
+		Admin.findOne( req.param('id'), function (err, user) {
+			if(err) return next(err);
+
+			if(!user) {
+				req.session.flash = {
+					failure:'user don\' exist',
+					success:''
+				};
+				return res.redirect('back');
+			}
+
+			res.view({
+				user: user
+			});
+		})
+
 	},
 
 	login: function(req, res, next) {
