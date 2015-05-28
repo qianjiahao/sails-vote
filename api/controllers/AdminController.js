@@ -20,7 +20,7 @@ module.exports = {
 		var confirmation = req.param('confirmation');
 		var email = req.param('email');
 		var organization = req.param('organization');
-		var admin = 'normal';
+		var status = 'user';
 		
 		if (!(name && email)) {
 			req.session.flash = {
@@ -41,7 +41,7 @@ module.exports = {
 			return res.redirect('/admin/new');
 		}
 
-		bcrypt.hash(password, 10, function(err, encryptedPassword) {
+		bcrypt.hash(password, 10, function (err, encryptedPassword) {
 			if (err) return next(err);
 
 			Admin.findOneByEmail(email, function(err, user) {
@@ -57,10 +57,10 @@ module.exports = {
 						name: name,
 						encryptedPassword: encryptedPassword,
 						email: email,
-						admin: admin,
+						status: status,
 						organization: organization
 					};
-					Admin.create(user, function(err, user) {
+					Admin.create(user, function (err, user) {
 						if (err) return next(err);
 						req.session.authenticated = true;
 						req.session.User = user;
@@ -73,7 +73,7 @@ module.exports = {
 
 	index: function(req, res, next) {
 
-		Admin.find(function(err, users) {
+		Admin.find(function (err, users) {
 			if (err) return next(err);
 
 			if (!users) {
@@ -91,7 +91,7 @@ module.exports = {
 
 	show: function(req, res, next) {
 
-		Admin.findOne(req.param('id'), function(err, user) {
+		Admin.findOne(req.param('id'), function (err, user) {
 			if (err) return next(err);
 
 			if (!user) {
@@ -108,7 +108,7 @@ module.exports = {
 
 	edit: function(req, res, next) {
 
-		Admin.findOne(req.param('id'), function(err, user) {
+		Admin.findOne(req.param('id'), function (err, user) {
 			if (err) return next(err);
 
 			if (!user) {
@@ -125,7 +125,7 @@ module.exports = {
 
 	update: function(req, res, next) {
 
-		Admin.findOneByEmail(req.param('email'), function(err, user) {
+		Admin.findOneByEmail(req.param('email'), function (err, user) {
 			if (err) return next(err);
 
 			if (!user) {
@@ -142,7 +142,7 @@ module.exports = {
 				organization: req.param('organization')
 			};
 
-			Admin.update(req.param('id'), user, function(err) {
+			Admin.update(req.param('id'), user, function (err) {
 				if (err) return next(err);
 
 				req.session.flash = {
@@ -163,7 +163,7 @@ module.exports = {
 
 	destroy: function(req, res, next) {
 
-		Admin.destroy(req.param('id'), function(err) {
+		Admin.destroy(req.param('id'), function (err) {
 			if (err) return next(err);
 
 			if (req.session.User.id === req.param('id')) {
@@ -180,7 +180,7 @@ module.exports = {
 
 	login: function(req, res, next) {
 
-		Admin.findOneByEmail(req.param('email'), function(err, user) {
+		Admin.findOneByEmail(req.param('email'), function (err, user) {
 			if (err) next(err);
 
 			if (!user) {
@@ -189,7 +189,7 @@ module.exports = {
 				};
 				return res.redirect('back');
 			}
-			bcrypt.compare(req.param('password'), user.encryptedPassword, function(err, valid) {
+			bcrypt.compare(req.param('password'), user.encryptedPassword, function (err, valid) {
 				if (err) return next(err);
 
 				if (!valid) {

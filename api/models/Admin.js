@@ -23,9 +23,9 @@ module.exports = {
   		type: 'string',
   	},
 
-  	admin: {
+  	status: {
   		type: 'string',
-  		defaultsTo: 'normal'
+  		defaultsTo: 'user'
   	},
 
   	encryptedPassword: {

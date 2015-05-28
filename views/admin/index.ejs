@@ -19,6 +19,14 @@
 				<td><%= user.name %></td>
 				<td><%= user.email %></td>
 				<td><%= user.organization %></td>
+				<td>
+					<% if(user.status === 'user'){ %>
+						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+					<% } %>
+					<% if(user.status === 'admin'){ %>
+						<span class="glyphicon glyphicon-tower" aria-hidden="true"></span>
+					<% } %>
+				</td>
 				<td><a href="/admin/show/<%= user.id %>" class="btn btn-sm btn-primary">查看</a></td>
 				<td><a href="/admin/edit/<%= user.id %>" class="btn btn-sm btn-warning">编辑</a></td>
 				<td><form method="POST" action="/admin/destroy/<%= user.id %>">

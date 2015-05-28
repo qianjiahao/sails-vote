@@ -4,7 +4,7 @@
 
 module.exports = function (req, res, next) {
 
-	var isAdmin = req.session.User.admin === 'admin';
+	var isAdmin = req.session.User.status === 'admin';
 
 
 

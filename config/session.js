@@ -67,11 +67,11 @@ module.exports.session = {
   *                                                                          *
   ***************************************************************************/
 
-  // adapter: 'mongo',
-  // host: 'localhost',
-  // port: 27017,
-  // db: 'vote',
-  // collection: 'sessions',
+  adapter: 'mongo',
+  host: 'localhost',
+  port: 27017,
+  db: 'vote',
+  collection: 'sessions',
 
   /***************************************************************************
   *                                                                          *
@@ -82,10 +82,10 @@ module.exports.session = {
   *                                                                          *
   ***************************************************************************/
 
-  // username: '',
-  // password: '',
-  // auto_reconnect: false,
-  // ssl: false,
-  // stringify: true
+  username: '',
+  password: '',
+  autoReconnect: true,
+  ssl: false,
+  stringify: true
 
 };
