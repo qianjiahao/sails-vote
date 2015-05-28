@@ -54,9 +54,24 @@
             <li><a href="/item/index">index</a></li>
           </ul>
           <div class="navbar-right">
-              <a href="/admin/new" class="btn-default btn-sm navbar-btn navbar-right a-button">signin</a>
-              <a href="/admin/login" class="btn-success btn-sm navbar-btn navbar-right a-button" style="margin-right: 10px;">login</a>
+            <% if(!session.authenticated){ %>
+              <a href="/admin/new" class="btn-default btn navbar-btn navbar-right a-button">signin</a>
+              
+            <% }else{ %>
+              <form action="/admin/logout">
+                <input type="submit" class="btn btn-danger btn-sm navbar-btn" value="logout">
+                <input type="hidden" name="_csrf" value="<%= _csrf %>">
+              </form>
+            <% } %>
           </div>
+          <% if(!session.authenticated){ %>
+          <form class="navbar-form navbar-right" action="/admin/login" method="POST">
+            <input type="email" name="email" placeholder="Email" class="form-control">
+            <input type="password" name="password" placeholder="Password" class="form-control">
+            <input type="hidden" name="_csrf" value="<%= _csrf %>">
+            <button class="btn-success btn">login</button>
+          </form>
+          <% } %>
         </div>
       </div>
     </div>

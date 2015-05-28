@@ -11,7 +11,7 @@ $(document).ready(function(){
 			},
 
 			password: {
-				// required: true,
+				required: true,
 				minlength:6
 			},
 
@@ -24,4 +24,9 @@ $(document).ready(function(){
 			element.text('OK').addClass('valid');
 		}
 	});
+
+	if($('#name')) {
+		$('#name').focus();
+	}
 });
+
