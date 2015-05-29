@@ -87,10 +87,6 @@ module.exports = {
 
 	update: function (req, res, next) {
 
-		var item = {
-			title: req.param('title'),
-			content: req.param('option')
-		};
 		Item.findOne(req.param('id'), function (err, item) {
 			if(err) return next(err);
 
@@ -100,6 +96,11 @@ module.exports = {
 				};
 				return res.redirect('/item/edit');
 			}
+
+			var item = {
+				title: req.param('title'),
+				content: req.param('option')
+			};
 			Item.update( req.param('id'), item, function (err) {
 				if(err) return next(err);
 
