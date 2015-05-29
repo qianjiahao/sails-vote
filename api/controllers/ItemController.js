@@ -38,22 +38,31 @@ module.exports = {
 	index: function (req, res, next) {
 
 		var createBy = req.session.User.id;
+		var page = req.param('page') ? parseInt(req.param('page')) : 1;
+		var limit = 5;
+		var skip = (page - 1);
 
-		Item.find({ 
-			createBy:createBy
-		}, function (err, items) {
+		Item.count(function (err, total) {
 			if(err) return next(err);
-			
-			if(!items) {
-				req.session.flash = {
-					failure:'item don\' exist'
-				};
-				return res.redirect('/item/index');	
-			}
-			res.view({
-				items: items
-			});
-		});
+
+			Item.find({ where: { createBy:createBy }, limit: limit, skip: skip }, function (err, items) {
+				if(err) return next(err);
+				
+				if(!items) {
+					req.session.flash = {
+						failure:'item don\' exist'
+					};
+					return res.redirect('/item/index');	
+				}
+				res.view({
+					items: items,
+					page: page,
+					isNext: (total - (page - 1) * limit + items.length) ? true : false,
+					isPrevious: page - 1 ? true : false 
+				});
+			});	
+		})
+		
 	},
 
 	show: function (req, res, next) {

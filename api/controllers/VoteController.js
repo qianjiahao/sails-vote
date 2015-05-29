@@ -24,7 +24,7 @@ module.exports = {
 					isPrevious: page - 1 ? true : false
 				});
 			});	
-		})
+		});
 		
 	}	
 };

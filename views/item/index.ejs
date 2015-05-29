@@ -29,3 +29,14 @@
 	</table>
 </div>
 
+<nav>
+	<ul class="pager">
+		<% if(isPrevious){ %>
+			<li><a href="/item/index?page=<%= page-1 %>">previous</a></li>
+		<% } %>
+		<% if(isNext){%>
+			<li><a href="/item/index?page=<%= page+1 %>">next</a></li>
+		<% } %>
+
+	</ul>
+</nav>
