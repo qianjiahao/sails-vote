@@ -54,7 +54,8 @@
             <%if(session.authenticated && session.User.status === 'admin'){ %>
             <li><a href="/admin/index">User</a></li>
             <li><a href="/item/index">Item</a></li>
-            <li><a href="/item/new">New</a></li>
+            <li><a href="/item/new">New-item</a></li>
+            <li><a href="/vote/new">New-vote</a></li>
             <%}%>
           </ul>
           <div class="navbar-right">
@@ -138,6 +139,7 @@
     <script src="/js/dependencies/jquery.min.js"></script>
     <script src="/js/dependencies/jquery.validate.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/customer.js"></script>
     <script src="/js/customerValidate.js"></script>
     <!--SCRIPTS END-->
   </body>

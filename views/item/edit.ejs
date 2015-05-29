@@ -7,16 +7,16 @@
 	<form class="form-horizontal" method="POST" action="/item/update/<%= item.id %>">
 
 		<div class="form-group">
-			<lable class="col-sm-2" for="textarea">题目描述</lable>
+			<lable class="col-sm-2" for="textarea">Item Description</lable>
 			<div class="col-sm-10">
-				<textarea name="title" class="form-control" id="textarea" placeholder="题目描述" rows="4" autocomplete="off" ><%= item.title %></textarea>	
+				<textarea name="title" class="form-control" id="textarea" placeholder="Item Description" rows="4" autocomplete="off" ><%= item.title %></textarea>	
 			</div>
 		</div>
 		<% _.each(item.content, function (option, index) {  %>
 			<div class="form-group">
-				<label class="col-sm-2" for="option-<%= index+1%>">选项 <%= index+1%></label>
+				<label class="col-sm-2" for="option-<%= index+1%>">Opteon <%= index+1%></label>
 				<div class="col-sm-10">
-					<input type="text" name="option" class="form-control" id="option-<%= index %>" autocomplete="off" placeholder="选项" value="<%= option %>">
+					<input type="text" name="option" class="form-control" id="option-<%= index %>" autocomplete="off" placeholder="Option" value="<%= option %>">
 				</div>
 			</div>			
 
@@ -26,10 +26,10 @@
 		
 		<div class="form-group">
 			<div class="col-sm-6">
-				<input type="submit" class="btn btn-mid btn-primary btn-block" value="更新">			
+				<input type="submit" class="btn btn-mid btn-primary btn-block" value="update">			
 			</div>
 			<div class="col-sm-6">
-				<input type="reset" class="btn btn-mid btn-warning btn-block" value="重置">			
+				<input type="reset" class="btn btn-mid btn-warning btn-block" value="reset">			
 			</div>
 		</div>
 	</form>	

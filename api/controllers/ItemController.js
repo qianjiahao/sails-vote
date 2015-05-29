@@ -16,7 +16,8 @@ module.exports = {
 
 		var item = {
 			title: req.param('title'),
-			content: req.param('option')
+			content: req.param('option'),
+			createBy: req.session.User.id
 		}
 		Item.create( item, function (err, item) {
 			if(err) return next(err);
@@ -36,7 +37,11 @@ module.exports = {
 
 	index: function (req, res, next) {
 
-		Item.find(function (err, items) {
+		var createBy = req.session.User.id;
+
+		Item.find({ 
+			createBy:createBy
+		}, function (err, items) {
 			if(err) return next(err);
 			
 			if(!items) {
@@ -113,15 +118,17 @@ module.exports = {
 	},
 
 	destroy: function (req, res, next) {
+		if(req.session.User.id === req.param('id')) {
+			Item.destroy(req.param('id'), function (err) {
+				if(err) return next(err);
 
-		Item.destroy(req.param('id'), function (err) {
-			if(err) return next(err);
-
-			req.session.flash = {
-				success:'destroy success'
-			};
-			res.redirect('/item/index');
-		});
+				req.session.flash = {
+					success:'destroy success'
+				};
+				res.redirect('/item/index');
+			});
+		}
+		
 	}
 };
 

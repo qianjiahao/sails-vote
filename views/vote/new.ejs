@@ -1,0 +1,43 @@
+<div class="container vote-new">
+	
+	<%- include ../flash%>
+
+	<h2>Items List</h2>
+
+	<table class="table table-hover">
+		<tr>
+			<td><input type="checkbox" name="allItems" id="all-checkbox"></td>
+			<td class="first-td">ID</td>
+			<td class="next-td">Title</td>
+			<!-- <td></td> -->
+			<!-- <td></td> -->
+			<td class="last-td"></td>	
+		</tr>
+		<% _.each(items,function (item, index) {  %>
+			<tr data-id="<%= item.id %>" data-model="item">
+				<td><input type="checkbox" name="item" data-id="<%= item.id %>" date-title="<%= item.title %>" date-content="<%= item.content %>"></td>
+				<td><%= item.id %></td>
+				<td><p class="item-index-title"><%= item.title %></p></td>
+				<!-- <td><a href="/item/show/<%= item.id %>" class="btn btn-sm btn-primary">show</a></td> -->
+				<!-- <td><a href="/item/edit/<%= item.id %>" class="btn btn-sm btn-warning">edit</a></td> -->
+				<td><form method="POST" action="/vote/add/<%= item.id %>">
+					<input type="submit" class="btn btn-sm btn-primary" value="add">
+					<input type="hidden" name="_csrf" value="<%= _csrf %>">
+				</form></td>
+			</tr>
+		<%	})%>
+	</table>
+</div>
+
+<nav>
+	<ul class="pager">
+		<% if(isPrevious){ %>
+			<li><a href="/vote/new?page=<%= page-1 %>">previous</a></li>
+		<% } %>
+		<% if(isNext){%>
+			<li><a href="/vote/new?page=<%= page+1 %>">next</a></li>
+		<% } %>
+
+	</ul>
+</nav>
+

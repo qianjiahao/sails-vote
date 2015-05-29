@@ -14,22 +14,33 @@
 @Red:#d16565;
 @WeddingVeil:#FFFFFD;
 
+@MarginTop:70px;
 body{
 	background-image: url(../images/default-bg.png);
 }
 
-.item-new, .item-edit, .item-show,.admin-show{
-	margin-top:100px;
+.item-new, .item-edit, .item-show,.admin-show,.vote-new{
+	margin-top:@MarginTop;
 	max-width: 800px;
 	font-size: 20px;
 	line-height: 20px;
 	h2{
 		margin-bottom: 30px;	
 	}
+
+	.first-td{
+		max-width: 300px;
+	}
+	.next-td{
+		width: 200px;
+	}
+	.last-td{
+		max-width: 300px;
+	}
 }
 
 .item-index, .admin-index{
-	margin-top: 100px;
+	margin-top:@MarginTop;
 	max-width: 1024px;
 }
 
@@ -88,12 +99,10 @@ body{
 }
 
 .admin-new{
-	margin-top: 80px;
+	margin-top:@MarginTop;
 }
-
-
-
 
 .admin-show-first-td{
 	text-align: left;
 }
+
