@@ -1,17 +1,22 @@
-$(document).ready(function(){
+(function($,window){
 
-	$('#textarea').focus();
-	$('#name'),focus();
+	$(document).ready(function(){
 
-	$('#all-checkbox').click(function(){
-		var self = $(this);
-		$('input[name="item"]').each(function(index) {
-			if(self.is(':checked')) {
-				$(this).prop('checked',true);		
-			}else{
-				$(this).prop('checked',false);		
-			}
-		});	
+		$('#textarea').focus();
+		$('#name'),focus();
+
+		$('#all-checkbox').click(function(){
+			var self = $(this);
+			$('input[name="item"]').each(function(index) {
+				if(self.is(':checked')) {
+					$(this).prop('checked',true);		
+				}else{
+					$(this).prop('checked',false);		
+				}
+			});	
+		});
+
 	});
 
-});
+})(jQuery,window);
+

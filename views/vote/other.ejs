@@ -1,4 +1,6 @@
-<form action="/vote/create" method="POST" class="form-signin admin-new">
+<%}else{%>
+
+	<form action="/vote/create" method="POST" class="form-signin admin-new">
 	
 	<%- include ../flash%>
 
@@ -8,3 +10,7 @@
 	<input type="submit" class="btn btn-lg btn-primary btn-block" value="Create Vote">
 	<input type="hidden" name="_csrf" value="<%= _csrf %>">
 </form>
+<%}%>
+
+
+	<!-- <%if(!votes){%> -->

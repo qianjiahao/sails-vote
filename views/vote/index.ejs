@@ -1,0 +1,46 @@
+<div class="container vote-new">
+	
+	<%- include ../flash%>
+
+	<h2>Vote List</h2>
+
+
+	<table class="table table-hover">
+		<tr>
+			<td class="first-td">Create By</td>
+			<td class="next-td">Name</td>
+			<td></td>
+			<td></td>
+			<td class="last-td">
+				<form method="POST" action="/vote/destroyAll">
+					<input type="submit" class="btn btn-sm btn-danger btn-block" value="destroyAll">
+					<input type="hidden" name="_csrf" value="<%= _csrf %>">
+				</form></td>	
+		</tr>
+		<% _.each(votes,function (vote, index) {  %>
+			<tr data-id="<%= vote.id %>" data-model="vote">
+				<td><%= vote.createBy%></td>
+				<td><%= vote.name %></td>
+				<td><a href="/vote/show/<%= vote.id %>" class="btn btn-primary btn-sm">show</a></td>
+				<td><a href="/vote/itemList/<%= vote.id %>" class="btn btn-default btn-sm">to-add-item</a></td>
+				<td><form method="POST" action="/vote/destroy/<%= vote.id %>">
+					<input type="submit" class="btn btn-sm btn-danger btn-block" value="destroy">
+					<input type="hidden" name="_csrf" value="<%= _csrf %>">
+				</form></td>
+			</tr>
+		<%	})%>
+	</table>
+</div>
+
+<nav>
+	<ul class="pager">
+		<% if(isPrevious){ %>
+			<li><a href="/vote/index?page=<%= page-1 %>">previous</a></li>
+		<% } %>
+		<% if(isNext){%>
+			<li><a href="/vote/index?page=<%= page+1 %>">next</a></li>
+		<% } %>
+	</ul>
+</nav>
+
+

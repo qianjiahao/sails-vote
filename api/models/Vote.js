@@ -13,12 +13,12 @@ module.exports = {
 
   	name: {
   		type: 'string',
-  		required: true
+      defaultsTo: 'default'
   	},
 
   	content: {
   		type: 'array',
-  		required: true
+      defaultsTo: []
   	},
 
   	createBy: {
