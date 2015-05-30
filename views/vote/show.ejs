@@ -11,20 +11,15 @@
 			<td></td>
 			<td></td>
 			<td></td>
-			<td></td>
 		</tr>
 		<% _.each(items,function (item, index) {  %>
 			<tr data-id="<%= item.id %>" data-model="item">
 				<td><%= index+1 %></td>
 				<td><p class="item-index-title"><%= item.title %></p></td>
-				<td><a href="/item/show/<%= item.id %>" class="btn btn-sm btn-primary">show</a></td>
-				<td><a href="/item/edit/<%= item.id %>" class="btn btn-sm btn-warning">edit</a></td>
-				<td><form method="POST" action="/item/destroy/<%= item.id %>">
+				<td><a href="/vote/showItem/<%= item.id %>" class="btn btn-sm btn-primary">show</a></td>
+				<td><a href="/vote/editItem/<%= item.id %>" class="btn btn-sm btn-warning">edit</a></td>
+				<td><form method="POST" action="/vote/destroyItem/<%= item.id %>">
 					<input type="submit" class="btn btn-sm btn-danger" value="destroy">
-					<input type="hidden" name="_csrf" value="<%= _csrf %>">
-				</form></td>
-				<td><form method="POST" action="/vote/addOne/<%= item.id %>">
-					<input type="submit" class="btn btn-sm btn-default" value="add-item">
 					<input type="hidden" name="_csrf" value="<%= _csrf %>">
 				</form></td>
 			</tr>
@@ -35,10 +30,10 @@
 <nav>
 	<ul class="pager">
 		<% if(isPrevious){ %>
-			<li><a href="/item/index?voteId=<%= vote.id %>&page=<%= page-1 %>">previous</a></li>
+			<li><a href="/vote/show/<%= vote.id %>?page=<%= page-1 %>">previous</a></li>
 		<% } %>
 		<% if(isNext){%>
-			<li><a href="/item/index?voteId=<%= vote.id %>&page=<%= page+1 %>">next</a></li>
+			<li><a href="/vote/show/<%= vote.id %>?page=<%= page+1 %>">next</a></li>
 		<% } %>
 	</ul>
 </nav>

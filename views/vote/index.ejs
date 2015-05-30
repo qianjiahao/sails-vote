@@ -12,11 +12,7 @@
 			<td>Vote Name</td>
 			<td></td>
 			<td></td>
-			<td>
-				<form method="POST" action="/vote/destroyAll">
-					<input type="submit" class="btn btn-sm btn-danger btn-block" value="destroyAll">
-					<input type="hidden" name="_csrf" value="<%= _csrf %>">
-				</form></td>	
+			<td></td>
 		</tr>
 		<% _.each(votes,function (vote, index) {  %>
 			<tr data-id="<%= vote.id %>" data-model="vote">
@@ -24,7 +20,7 @@
 				<td><%= user.email %></td>
 				<td><%= vote.name %></td>
 				<td><a href="/vote/show/<%= vote.id %>" class="btn btn-primary btn-sm">show</a></td>
-				<td><a href="/item/index?voteId=<%= vote.id %>" class="btn btn-default btn-sm">to-add-item</a></td>
+				<td><a href="/item/index?voteId=<%= vote.id %>" class="btn btn-default btn-sm">manage items</a></td>
 				<td><form method="POST" action="/vote/destroy/<%= vote.id %>">
 					<input type="submit" class="btn btn-sm btn-danger btn-block" value="destroy">
 					<input type="hidden" name="_csrf" value="<%= _csrf %>">

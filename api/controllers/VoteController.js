@@ -77,9 +77,130 @@ module.exports = {
 		});
 	},
 
-	addOne: function(req, res, next) {
+	show: function (req,res, next) {
+
+		var voteId = req.param('id');
+		req.session.voteId = voteId;
+		var page = req.param('page') ? parseInt(req.param('page')) : 1;
+		var limit = 5;
+		var skip = 5;
+		var start = (page - 1) * skip;
+		var end = start + limit;
+
+		Vote.findOne(voteId, function (err, vote) {
+			if(err) return next(err);
+
+				var items = vote.content.slice(start,end);
+				var total = vote.content.length;
+
+				res.view({
+					vote: vote,
+					items: items,
+					page: page,
+					isNext: total - start - vote.content.length ? true : false,
+					isPrevious: start ? true : false
+				});
+		});
+
+	},
+
+	showItem: function (req, res, next) {
 
 		var voteId = req.session.voteId;
+		var itemId = req.param('id');
+
+		Vote.findOne(voteId, function (err, vote) {
+			if(err) return next(err);
+
+			var item;
+			vote.content.map(function (ele) {
+				 if(ele.id == itemId) {
+				 	item = ele;
+				 }
+			});
+			res.view({
+				vote: vote,
+				item: item
+			});
+		});
+	},
+
+	editItem: function (req, res, next) {
+		
+		var voteId = req.session.voteId;
+		var itemId = req.param('id');
+
+		Vote.findOne(voteId, function (err, vote) {
+			if(err) return next(err);
+
+			var item;
+			vote.content.map(function (ele) {
+				 if(ele.id == itemId) {
+				 	item = ele;
+				 }
+			});
+			res.view({
+				vote: vote,
+				item: item
+			});
+		});
+
+	},
+
+	updateItem: function (req, res, next) {
+
+		var voteId = req.session.voteId;
+
+		var itemId = req.param('id');
+
+		Vote.findOne(voteId, function (err, vote) {
+			if(err) return next(err);
+			console.log(vote);
+			var result = vote;
+			result.content.map(function (ele) {
+				if(ele.id === itemId) {
+					ele.title = req.param('title');
+					ele.content = req.param('option');
+				}
+			});
+			console.log(result);
+			Vote.update(voteId, result, function (err) {
+				if(err) return next(err);
+
+				res.redirect('/vote/showItem/' + itemId);
+			});
+		});
+	},
+
+	destroyItem: function (req, res, next) {
+
+		var voteId = req.session.voteId;
+		var itemId = req.param('id');
+
+		Vote.findOne(voteId, function (err, vote) {
+			if(err) return next(err);
+
+			var item = [];
+			vote.content.map(function (ele) {
+				 if(ele.id != itemId) {
+				 	item.push(ele);
+				 }
+			});
+
+			vote.content = item;
+			vote.save(function (err) {
+				if(err) return next(err);
+
+				res.redirect('/vote/show/' + voteId);
+
+			});
+		});
+
+
+	},
+
+	addOne: function(req, res, next) {
+
 		Item.findOne(req.param('id'), function (err, item) {
 			if (err) return next(err);
 
@@ -90,7 +211,7 @@ module.exports = {
 				return res.redirect('back');
 			}
 
-			Vote.findOne(voteId, function (err, vote) {
+			Vote.findOne(req.session.voteId, function (err, vote) {
 				if(err) return next(err);
 
 				vote.content.push(item);
@@ -102,10 +223,17 @@ module.exports = {
 			});
 		});
 	},
-	addAll: function (req, res, next) {
 
-		var voteId = req.session.voteId;
-		var items = req.param('items');
-		console.log(items);
+	destroy: function (req, res, next) {
+
+		Vote.destroy(req.param('id'), function (err) {
+			if(err) return next(err);
+
+			req.session.flash = {
+				success:'destroy vote success'
+			};
+
+			res.redirect('back');
+		})
 	}
 };

@@ -1,0 +1,32 @@
+<div class="container item-show">
+	
+	<%- include ../flash %>
+	<h2>Vote : <%= vote.name %></h2>
+
+	<div class="item-show-title">
+		<%= item.title %>
+	</div>
+
+	<table class="table table-hover">
+		<tr>
+			<td>Index</td>
+			<td>Option</td>
+		</tr>
+
+		<% _.each(item.content, function (option, index) {	%>
+			<tr>
+				<td><%= index+1 %></td>
+				<td><%= option %></td>
+			</tr>
+		<%	})%>	
+		<tr>
+			<td><a href="/item/editItem/<%= item.id %>" class="btn btn-warning btn-block">edit</a></td>
+			<td>
+				<form action="/vote/destroyItem/<%= item.id %>">
+					<input type="hidden" name="_csrf" value="<%= _csrf %>">
+					<input type="submit" class="btn btn-danger btn-block" value="destroy">
+				</form>
+			</td>
+		</tr>
+	</table>
+</div>
