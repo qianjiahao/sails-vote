@@ -8,11 +8,19 @@ var bcrypt = require('bcrypt');
 
 module.exports = {
 
+	/**
+	 * GET return new.ejs page .
+	 */
 	new: function(req, res, next) {
 
 		res.view();
 	},
 
+	/**
+	 * POST post the information from new.ejs page ,
+	 *      crypte the password and create user into database ,
+	 *      change online status .
+	 */
 	create: function(req, res, next) {
 
 		var name = req.param('name');
@@ -72,6 +80,9 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * GET return user list .
+	 */
 	index: function(req, res, next) {
 
 		Admin.find(function (err, users) {
@@ -87,9 +98,11 @@ module.exports = {
 				users: users
 			});
 		});
-
 	},
 
+	/**
+	 * GET return detail user information .
+	 */
 	show: function(req, res, next) {
 
 		Admin.findOne(req.param('id'), function (err, user) {
@@ -107,6 +120,9 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * GET return detail user information and ready to edit .
+	 */
 	edit: function(req, res, next) {
 
 		Admin.findOne(req.param('id'), function (err, user) {
@@ -124,6 +140,9 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * POST validate and edit the user information ,then update it into database .
+	 */
 	update: function(req, res, next) {
 
 		Admin.findOneByEmail(req.param('email'), function (err, user) {
@@ -149,19 +168,22 @@ module.exports = {
 				req.session.flash = {
 					success: 'update user success'
 				};
-				
+				/*
+				update sesson if you change your information .
+				 */
 				if (req.session.User.id == req.param('id')) {
-
 					Admin.findOne(req.param('id'), function (err, user) {
 						req.session.User = user;
 					});
 				}
-
 				res.redirect('/admin/show/' + req.param('id'));
 			});
 		});
 	},
 
+	/**
+	 * POST destroy user .
+	 */
 	destroy: function(req, res, next) {
 
 		Admin.destroy(req.param('id'), function (err) {
@@ -179,6 +201,9 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * POST post information and validate it , then login vote system and change online status .
+	 */
 	login: function(req, res, next) {
 
 		Admin.findOneByEmail(req.param('email'), function (err, user) {
@@ -210,14 +235,15 @@ module.exports = {
 					if(user.status === 'admin') {
 						return res.redirect('/admin/index');
 					}
-					
 					res.redirect('/admin/show/' + user.id);
-
 				});
 			});
 		});
 	},
 
+	/**
+	 * POST logout vote system and change online status .
+	 */
 	logout: function(req, res, next) {
 
 		Admin.update(req.session.User.id, {

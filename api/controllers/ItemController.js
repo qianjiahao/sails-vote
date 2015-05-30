@@ -7,13 +7,18 @@
 
 module.exports = {
 
+	/**
+	 * GET return new.ejs page .
+	 */
 	new: function (req, res, next) {
 
 		res.view();
 	},
 
+	/**
+	 * POST post information to create item .
+	 */
 	create: function (req, res, next) {
-
 		var item = {
 			title: req.param('title'),
 			content: req.param('option'),
@@ -35,15 +40,20 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * GET return item information , ready to operate it by show , edit , destroy , addItem ,
+	 *     pager : page , skip , limit .
+	 */
 	index: function (req, res, next) {
-
 		var voteId = req.param('voteId');
 		req.session.voteId = voteId;
 		Vote.findOne(voteId, function (err, vote) {
 			if(err) return next(err);
 
+			/*
+			save the exist item id .
+			 */
 			var existItemsMap = [];
-			
 			vote.content.map(function(ele) {
 				this.push(ele.id);
 			},existItemsMap);
@@ -53,6 +63,9 @@ module.exports = {
 			var skip = ( page - 1 ) * 5;
 			var limit = 5;
 
+			/*
+			distinguish item by existItemMap .
+			 */
 			Item.count({
 				where:{
 					createBy: createBy,
@@ -87,8 +100,10 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * GET return item detail .
+	 */
 	show: function (req, res, next) {
-
 		Item.findOne( req.param('id'), function (err, item) {
 			if(err) return next(err);
 
@@ -104,8 +119,10 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * GET return item detail and ready to edit .
+	 */
 	edit: function (req, res, next) {
-
 		Item.findOne( req.param('id'), function (err, item) {
 			if(err) return next(err);
 
@@ -121,8 +138,10 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * POST post the information and update it into database .
+	 */
 	update: function (req, res, next) {
-
 		Item.findOne(req.param('id'), function (err, item) {
 			if(err) return next(err);
 
@@ -132,7 +151,6 @@ module.exports = {
 				};
 				return res.redirect('/item/edit');
 			}
-
 			var item = {
 				title: req.param('title'),
 				content: req.param('option')
@@ -148,8 +166,10 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * POST destroy item .
+	 */
 	destroy: function (req, res, next) {
-
 		var voteId = req.session.voteId;
 
 		Item.destroy(req.param('id'), function (err) {

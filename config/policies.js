@@ -52,6 +52,14 @@ module.exports.policies = {
     update:['flash','sessionAuth'],
     destroy:['flash','sessionAuth'],
     index:['flash','sessionAuth','admin']
+  },
+
+  /**
+   * rest api vote : only allow the admin to manage .
+   * @type {Object}
+   */
+  vote: {
+    '*': ['flash','sessionAuth','admin']
   }
   /***************************************************************************
   *                                                                          *

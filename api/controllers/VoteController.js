@@ -7,6 +7,10 @@
 
 module.exports = {
 
+	/**
+	 * GET return the vote list in the index.ejs page .
+	 * 	   pager : page , limit , skip
+	 */
 	index: function(req, res, next) {
 
 		var createBy = req.session.User.id;
@@ -27,6 +31,7 @@ module.exports = {
 				};
 				return res.redirect('/vote/new');
 			}
+
 			Vote.find({
 				where: {
 					createBy: createBy
@@ -46,17 +51,22 @@ module.exports = {
 						isNext: total - ((page - 1) * limit + votes.length) ? true : false,
 						isPrevious: page - 1 ? true : false
 					});	
-				})
-				
+				});
 			});
 		});
 	},
 
+	/**
+	 * GET return the new.ejs page . 
+	 */
 	new: function(req, res, next) {
 
 		res.view();
 	},
 
+	/**
+	 * POST create vote with param from new.ejs page .
+	 */
 	create: function (req, res, next) {
 
 		var vote = {
@@ -77,6 +87,10 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * GET return the item information from vote content ,
+	 * 	   pager : page , limit , skip , start , end .
+	 */
 	show: function (req,res, next) {
 
 		var voteId = req.param('id');
@@ -101,9 +115,11 @@ module.exports = {
 					isPrevious: start ? true : false
 				});
 		});
-
 	},
 
+	/**
+	 * GET return item from vote content .
+	 */
 	showItem: function (req, res, next) {
 
 		var voteId = req.session.voteId;
@@ -125,6 +141,9 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * GET return the item from vote content and ready to edit .
+	 */
 	editItem: function (req, res, next) {
 		
 		var voteId = req.session.voteId;
@@ -144,9 +163,11 @@ module.exports = {
 				item: item
 			});
 		});
-
 	},
 
+	/**
+	 * POST post the param from edit page and update into vote content .
+	 */
 	updateItem: function (req, res, next) {
 
 		var voteId = req.session.voteId;
@@ -163,7 +184,6 @@ module.exports = {
 					ele.content = req.param('option');
 				}
 			});
-			console.log(result);
 			Vote.update(voteId, result, function (err) {
 				if(err) return next(err);
 
@@ -172,6 +192,9 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * POST destroy the item from vote content .
+	 */
 	destroyItem: function (req, res, next) {
 
 		var voteId = req.session.voteId;
@@ -192,13 +215,13 @@ module.exports = {
 				if(err) return next(err);
 
 				res.redirect('/vote/show/' + voteId);
-
 			});
 		});
-
-
 	},
 
+	/**
+	 * POST add item into vote content .
+	 */
 	addOne: function(req, res, next) {
 
 		Item.findOne(req.param('id'), function (err, item) {
@@ -214,6 +237,9 @@ module.exports = {
 			Vote.findOne(req.session.voteId, function (err, vote) {
 				if(err) return next(err);
 
+				/*
+				save the modify into the vote .
+				 */
 				vote.content.push(item);
 				vote.save(function (err, vote) {
 					if(err) return next(err);
@@ -224,6 +250,9 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * POST destroy the vote .
+	 */
 	destroy: function (req, res, next) {
 
 		Vote.destroy(req.param('id'), function (err) {
@@ -234,6 +263,6 @@ module.exports = {
 			};
 
 			res.redirect('back');
-		})
+		});
 	}
 };
