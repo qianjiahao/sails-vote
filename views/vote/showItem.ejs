@@ -20,7 +20,7 @@
 			</tr>
 		<%	})%>	
 		<tr>
-			<td><a href="/item/editItem/<%= item.id %>" class="btn btn-warning btn-block">edit</a></td>
+			<td><a href="/vote/editItem/<%= item.id %>" class="btn btn-warning btn-block">edit</a></td>
 			<td>
 				<form action="/vote/destroyItem/<%= item.id %>">
 					<input type="hidden" name="_csrf" value="<%= _csrf %>">

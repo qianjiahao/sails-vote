@@ -4,6 +4,7 @@
 
 	<h2>Vote Name: <%= vote.name %></h2>
 
+	<% if(vote.content && vote.content.length){ %>
 	<table class="table table-hover">
 		<tr>
 			<td></td>
@@ -25,6 +26,11 @@
 			</tr>
 		<%	})%>
 	</table>
+
+	<%}else{%>
+		<hr>
+		<h3>There is no items right now , go to add it by <a href="/item/index?voteId=<%= vote.id %>">manage items</a></h3>
+	<%}%>
 </div>
 
 <nav>
@@ -37,3 +43,4 @@
 		<% } %>
 	</ul>
 </nav>
+
