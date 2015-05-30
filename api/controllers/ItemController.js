@@ -149,14 +149,17 @@ module.exports = {
 	},
 
 	destroy: function (req, res, next) {
+
+		var voteId = req.session.voteId;
+
 		Item.destroy(req.param('id'), function (err) {
 			if(err) return next(err);
 
 			req.session.flash = {
 				success:'destroy success'
 			};
-			res.redirect('back');
-		});		
+			res.redirect('/item/index?voteId=' + voteId);
+		});	
 	}
 };
 
