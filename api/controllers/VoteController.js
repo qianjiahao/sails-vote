@@ -83,7 +83,12 @@ module.exports = {
 		Vote.findOne(req.param('id'), function (err, vote) {
 			if(err) return next(err);
 
-			console.log(vote.content)
+			var existItemsMap = [];
+			
+			vote.content.map(function(ele) {
+				this.push(ele.id);
+			},existItemsMap);
+
 			var createBy = req.session.User.id;
 			var page = req.param('page') ? parseInt(req.param('page')) : 1;
 			var skip = ( page - 1 ) * 5;
@@ -91,15 +96,22 @@ module.exports = {
 
 			Item.count({
 				where:{
-					createBy: createBy
+					createBy: createBy,
+					id: {
+						'!': itemsMap
+					}
 				}
 			}, function (err, total) {
 				if(err) return next(err);
 
 				Item.find({
 					where:{
-						createBy: createBy
-					}, limit: limit,
+						createBy: createBy,
+						id: {
+							'!': itemsMap
+						}
+					},
+					limit: limit,
 					skip: skip
 				}, function (err, items) {
 					if(err) return next(err);
