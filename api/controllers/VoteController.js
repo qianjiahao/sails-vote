@@ -77,61 +77,9 @@ module.exports = {
 		});
 	},
 
-	itemList: function (req, res, next) {
-
-		req.session.voteId = req.param('id');
-		Vote.findOne(req.param('id'), function (err, vote) {
-			if(err) return next(err);
-
-			var existItemsMap = [];
-			
-			vote.content.map(function(ele) {
-				this.push(ele.id);
-			},existItemsMap);
-
-			var createBy = req.session.User.id;
-			var page = req.param('page') ? parseInt(req.param('page')) : 1;
-			var skip = ( page - 1 ) * 5;
-			var limit = 5;
-
-			Item.count({
-				where:{
-					createBy: createBy,
-					id: {
-						'!': itemsMap
-					}
-				}
-			}, function (err, total) {
-				if(err) return next(err);
-
-				Item.find({
-					where:{
-						createBy: createBy,
-						id: {
-							'!': itemsMap
-						}
-					},
-					limit: limit,
-					skip: skip
-				}, function (err, items) {
-					if(err) return next(err);
-
-					res.view({
-						vote: vote,
-						items: items,
-						page: page,
-						isNext: total - ((page - 1) * limit + items.length) ? true : false,
-						isPrevious: page - 1 ? true : false
-					});
-				});
-			});	
-		});
-	},
-
-	addItemToVote: function(req, res, next) {
+	addOne: function(req, res, next) {
 
 		var voteId = req.session.voteId;
-
 		Item.findOne(req.param('id'), function (err, item) {
 			if (err) return next(err);
 
@@ -153,5 +101,11 @@ module.exports = {
 				});
 			});
 		});
+	},
+	addAll: function (req, res, next) {
+
+		var voteId = req.session.voteId;
+		var items = req.param('items');
+		console.log(items);
 	}
 };

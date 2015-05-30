@@ -37,32 +37,54 @@ module.exports = {
 
 	index: function (req, res, next) {
 
-		var createBy = req.session.User.id;
-		var page = req.param('page') ? parseInt(req.param('page')) : 1;
-		var limit = 5;
-		var skip = (page - 1);
-
-		Item.count(function (err, total) {
+		var voteId = req.param('voteId');
+		req.session.voteId = voteId;
+		Vote.findOne(voteId, function (err, vote) {
 			if(err) return next(err);
 
-			Item.find({ where: { createBy:createBy }, limit: limit, skip: skip }, function (err, items) {
-				if(err) return next(err);
-				
-				if(!items) {
-					req.session.flash = {
-						failure:'item don\' exist'
-					};
-					return res.redirect('/item/index');	
+			var existItemsMap = [];
+			
+			vote.content.map(function(ele) {
+				this.push(ele.id);
+			},existItemsMap);
+
+			var createBy = req.session.User.id;
+			var page = req.param('page') ? parseInt(req.param('page')) : 1;
+			var skip = ( page - 1 ) * 5;
+			var limit = 5;
+
+			Item.count({
+				where:{
+					createBy: createBy,
+					id: {
+						'!': existItemsMap
+					}
 				}
-				res.view({
-					items: items,
-					page: page,
-					isNext: (total - (page - 1) * limit + items.length) ? true : false,
-					isPrevious: page - 1 ? true : false 
+			}, function (err, total) {
+				if(err) return next(err);
+
+				Item.find({
+					where:{
+						createBy: createBy,
+						id: {
+							'!': existItemsMap
+						}
+					},
+					limit: limit,
+					skip: skip
+				}, function (err, items) {
+					if(err) return next(err);
+
+					res.view({
+						vote: vote,
+						items: items,
+						page: page,
+						isNext: total - ((page - 1) * limit + items.length) ? true : false,
+						isPrevious: page - 1 ? true : false
+					});
 				});
 			});	
-		})
-		
+		});
 	},
 
 	show: function (req, res, next) {
@@ -127,17 +149,14 @@ module.exports = {
 	},
 
 	destroy: function (req, res, next) {
-		if(req.session.User.id === req.param('id')) {
-			Item.destroy(req.param('id'), function (err) {
-				if(err) return next(err);
+		Item.destroy(req.param('id'), function (err) {
+			if(err) return next(err);
 
-				req.session.flash = {
-					success:'destroy success'
-				};
-				res.redirect('/item/index');
-			});
-		}
-		
+			req.session.flash = {
+				success:'destroy success'
+			};
+			res.redirect('back');
+		});		
 	}
 };
 
