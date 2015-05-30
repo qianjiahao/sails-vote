@@ -36,12 +36,18 @@ module.exports = {
 			}, function (err, votes) {
 				if (err) return next(err);
 
-				res.view({
-					votes: votes,
-					page: page,
-					isNext: total - ((page - 1) * limit + votes.length) ? true : false,
-					isPrevious: page - 1 ? true : false
-				});
+				Admin.findOne(createBy, function (err, user) {
+					if(err) return next(err);
+
+					res.view({
+						votes: votes,
+						user: user,
+						page: page,
+						isNext: total - ((page - 1) * limit + votes.length) ? true : false,
+						isPrevious: page - 1 ? true : false
+					});	
+				})
+				
 			});
 		});
 	},
