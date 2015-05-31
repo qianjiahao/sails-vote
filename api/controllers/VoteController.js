@@ -128,15 +128,14 @@ module.exports = {
 		Vote.findOne(voteId, function (err, vote) {
 			if(err) return next(err);
 
-			var item;
 			vote.content.map(function (ele) {
 				 if(ele.id == itemId) {
-				 	item = ele;
+				 	
+				 	res.view({
+						vote: vote,
+						item: ele
+					});
 				 }
-			});
-			res.view({
-				vote: vote,
-				item: item
 			});
 		});
 	},
@@ -152,15 +151,14 @@ module.exports = {
 		Vote.findOne(voteId, function (err, vote) {
 			if(err) return next(err);
 
-			var item;
 			vote.content.map(function (ele) {
 				 if(ele.id == itemId) {
-				 	item = ele;
+
+				 	res.view({
+						vote: vote,
+						item: ele
+					});
 				 }
-			});
-			res.view({
-				vote: vote,
-				item: item
 			});
 		});
 	},
@@ -171,20 +169,18 @@ module.exports = {
 	updateItem: function (req, res, next) {
 
 		var voteId = req.session.voteId;
-
 		var itemId = req.param('id');
 
 		Vote.findOne(voteId, function (err, vote) {
 			if(err) return next(err);
-			console.log(vote);
-			var result = vote;
-			result.content.map(function (ele) {
+
+			vote.content.map(function (ele) {
 				if(ele.id === itemId) {
 					ele.title = req.param('title');
 					ele.content = req.param('option');
 				}
 			});
-			Vote.update(voteId, result, function (err) {
+			Vote.update(voteId, vote, function (err) {
 				if(err) return next(err);
 
 				res.redirect('/vote/showItem/' + itemId);
