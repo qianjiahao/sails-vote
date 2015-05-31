@@ -60,22 +60,22 @@ module.exports = {
 						failure: 'user already exist'
 					}
 					return res.redirect('/admin/new');
-				} else {
-					var user = {
-						name: name,
-						encryptedPassword: encryptedPassword,
-						email: email,
-						organization: organization,
-						online:online
-					};
-					Admin.create(user, function (err, user) {
-						if (err) return next(err);
+				} 
+				var user = {
+					name: name,
+					encryptedPassword: encryptedPassword,
+					email: email,
+					organization: organization,
+					online:online
+				};
+				Admin.create(user, function (err, user) {
+					if (err) return next(err);
 
-						req.session.authenticated = true;
-						req.session.User = user;
-						res.redirect('/admin/show/' + user.id);
-					});
-				}
+					req.session.authenticated = true;
+					req.session.User = user;
+					res.redirect('/admin/show/' + user.id);
+				});
+				
 			});
 		});
 	},
@@ -90,7 +90,7 @@ module.exports = {
 
 			if (!users) {
 				req.session.flash = {
-					failure: 'no users exist'
+					failure: 'user don\' exist'
 				};
 				return res.redirect('/admin/new');
 			}
